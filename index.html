@@ -400,6 +400,32 @@
         .priority-1 { background-color: #f8e6dc; color: #a85816; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
         .priority-2 { background-color: #fff3cd; color: #806500; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
         .priority-3 { background-color: #e3f1e7; color: #1b5e2f; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
+/* TAB 3 - Chia đều 3 cột nội dung thảo luận */
+#khungchandung .custom-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#khungchandung .custom-table th:nth-child(1),
+#khungchandung .custom-table td:nth-child(1) {
+    width: 7%;
+}
+
+#khungchandung .custom-table th:nth-child(2),
+#khungchandung .custom-table td:nth-child(2),
+#khungchandung .custom-table th:nth-child(3),
+#khungchandung .custom-table td:nth-child(3),
+#khungchandung .custom-table th:nth-child(4),
+#khungchandung .custom-table td:nth-child(4) {
+    width: 31%;
+}
+
+#khungchandung .custom-table td {
+    word-break: normal;
+    overflow-wrap: break-word;
+    vertical-align: top;
+    line-height: 1.55;
+}        
     </style>
 </head>
 <body>
@@ -822,9 +848,9 @@
                     <table class="custom-table">
                         <thead>
                             <tr style="background-color: #f4f8f4;">
-                                <th style="width: 70px;">Stt</th>
-                                <th style="width: 280px;">Các vấn đề / nội dung thảo luận chi tiết (Hoặc Nhóm năng lực đề xuất)</th>
-                                <th style="width: 320px;">Ý kiến HĐNT (Hoặc Năng lực chi tiết đề xuất)</th>
+                                <th>Stt</th>
+                                <th>Các vấn đề / nội dung thảo luận chi tiết (Hoặc Nhóm năng lực đề xuất)</th>
+                                <th>Ý kiến HĐNT (Hoặc Năng lực chi tiết đề xuất)</th>
                                 <th>HR định nghĩa hành vi thực tế</th>
                             </tr>
                         </thead>
