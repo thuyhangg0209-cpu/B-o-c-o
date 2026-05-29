@@ -75,6 +75,36 @@
             display: block;
         }
 
+        /* Fallback logo: bảo đảm logo vẫn hiển thị khi file ảnh assets/logo-bim-group.png không đi kèm HTML */
+        .bim-logo-fallback {
+            height: 54px;
+            min-width: 250px;
+            display: none;
+            align-items: center;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .bim-logo-fallback .bim-word {
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #006c32;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        .bim-logo-fallback .group-word {
+            font-size: 33px;
+            font-weight: 400;
+            color: #006c32;
+            margin-left: 2px;
+        }
+
+        .title-no-break {
+            white-space: nowrap;
+            display: inline-block;
+        }
+
 
         .logo-sub-program {
             font-size: 11px;
@@ -378,7 +408,11 @@
     <div class="sidebar">
         <div class="brand-container">
             <div class="logo-title-top">
-                <img src="Bim-group-1.png" alt="BIM Group Logo" class="bim-logo-img">
+                <!-- GitHub Pages: đặt file logo tại assets/logo-bim-group.png cùng repository với file HTML -->
+                <img src="logo-bim-group.png" alt="BIM Group Logo" class="bim-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="bim-logo-fallback" aria-label="BIM Group Logo">
+                    <span class="bim-word">BIM</span><span class="group-word">Group</span>
+                </div>
             </div>
             <div class="logo-sub-program">Chương trình hoạch định kế nhiệm</div>
             <div class="logo-main-text">BIM FUTURE LEADERS</div>
@@ -416,7 +450,7 @@
         <div id="tiendo" class="tab-content active">
             <div class="header-dashboard">
                 <div class="header-title">
-                    <h2> Tiến độ Chương trình<br><span style="white-space: nowrap;">Hoạch định Kế nhiệm 2026.</span></h2>
+                    <h2>Báo cáo Tiến độ Chương trình Hoạch định<br><span class="title-no-break">Kế nhiệm 2026.</span></h2>
                     <p>Theo dõi tổng thể các mốc thời gian cốt lõi và tiến trình hoàn thành của dự án</p>
                 </div>
                 <div class="meta-badge">Cập nhật: 29/05/2026</div>
