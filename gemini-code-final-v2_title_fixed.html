@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIM Future Leaders 2026 - Executive Presentation Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #0b3a1f; /* Deep Teal - Tông xanh ngọc đậm sang quý */
+            --primary-light: #0f7a3d;
+            --accent-color: #159447;  /* Metallic Gold - Điểm nhấn Vàng Kim */
+            --bg-dark: #06170f;
+            --bg-light: #eef3ed;
+            --text-main: #1f2b24;
+            --text-muted: #617069;
+            --white: #ffffff;
+            --success: #159447;
+            --warning: #c8a500;
+            --danger: #d64545;
+            --border-color: #dce7de;
+            
+            /* Màu sắc thương hiệu mới cập nhật */
+            --bim-logo-color: #006c32;
+            --bim-logo-bg: #00bc57;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR ĐIỀU HƯỚNG TRÁI */
+        .sidebar {
+            width: 340px;
+            background-color: var(--bg-dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            border-right: 3px solid var(--accent-color);
+            z-index: 10;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.2);
+        }
+
+        /* THIẾT KẾ LOGO CHƯƠNG TRÌNH NGUYÊN BẢN CẬP NHẬT MÀU MỚI */
+        .brand-container {
+            padding: 35px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: linear-gradient(180deg, rgba(6, 48, 26, 0.45) 0%, transparent 100%);
+        }
+
+        
+        .logo-title-top {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .bim-logo-img {
+            height: 54px;
+            width: auto;
+            display: block;
+        }
+
+
+        .logo-sub-program {
+            font-size: 11px;
+            color: #8ea59a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .logo-main-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-year-badge {
+            display: inline-block;
+            margin-top: 10px;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 10px;
+            font-size: 13px;
+            color: #159447;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 35px 15px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+        }
+
+        .nav-button {
+            width: 100%;
+            padding: 16px 18px;
+            background: none;
+            border: none;
+            color: #a8b8af;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            color: var(--white);
+        }
+
+        .nav-button.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 11px;
+            color: #829189;
+            text-align: center;
+        }
+
+        /* KHÔNG GIAN TRÌNH CHIẾU CHÍNH */
+        .main-content {
+            flex-grow: 1;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 45px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: tabFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HEADER */
+        .header-dashboard {
+            margin-bottom: 35px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header-title h2 {
+            font-size: 30px;
+            color: var(--primary-color);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-title p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .meta-badge {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+        }
+
+        /* THẺ TIẾN ĐỘ QUẢN TRỊ */
+        .phase-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+        }
+
+        .phase-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            border-top: 3px solid var(--primary-light);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 8px 0;
+        }
+
+        /* BẢNG DỮ LIỆU SANG TRỌNG */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.02);
+            overflow: hidden;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-header-custom {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 18px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13.5px;
+        }
+
+        .custom-table th {
+            background-color: #f7faf7;
+            color: var(--primary-color);
+            padding: 15px 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11.5px;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .custom-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+            white-space: pre-line;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: rgba(15, 122, 61, 0.025);
+        }
+
+        /* ĐỊNH DẠNG TRẠNG THÁI KHÁCH QUAN */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-success { background-color: #e6f5eb; color: #159447; }
+        .badge-warning { background-color: #fff8dc; color: #b88700; }
+        .badge-info { background-color: #f2f5f2; color: #7b8a81; }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e4ece5;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 6px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-light);
+            border-radius: 4px;
+        }
+
+        .vtty-summary-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .section-title-highlight {
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .text-bold-highlight {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .priority-1 { background-color: #f8e6dc; color: #a85816; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
+        .priority-2 { background-color: #fff3cd; color: #806500; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
+        .priority-3 { background-color: #e3f1e7; color: #1b5e2f; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-size:11px; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR ĐIỀU HƯỚNG TRÁI TÍCH HỢP NHẬN DIỆN MỚI -->
+    <div class="sidebar">
+        <div class="brand-container">
+            <div class="logo-title-top">
+                <img src="Bim-group-1.png" alt="BIM Group Logo" class="bim-logo-img">
+            </div>
+            <div class="logo-sub-program">Chương trình hoạch định kế nhiệm</div>
+            <div class="logo-main-text">BIM FUTURE LEADERS</div>
+            <div class="logo-year-badge">Khẳng định bản lĩnh - Tiếp nối tương lai | 2026</div>
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <button class="nav-button active" onclick="switchTab('tiendo', this)">
+                    📅 BÁO CÁO TIẾN ĐỘ SP
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-button" onclick="switchTab('vtty', this)">
+                    🏆 DANH SÁCH VTTY
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-button" onclick="switchTab('khungchandung', this)">
+                    💎 KHUNG CHÂN DUNG KẾ NHIỆM
+                </button>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <p>BIM Group © 2026</p>
+            <p style="color: var(--accent-color); margin-top: 4px; font-weight:600; letter-spacing:1px;">STRICTLY CONFIDENTIAL</p>
+        </div>
+    </div>
+
+    <!-- KHỐI CHỨA NỘI DUNG CHÍNH TRÌNH CHIẾU -->
+    <div class="main-content">
+
+        <!-- ================= TAB 1: BÁO CÁO TIẾN ĐỘ SP ================= -->
+        <div id="tiendo" class="tab-content active">
+            <div class="header-dashboard">
+                <div class="header-title">
+                    <h2>Báo cáo Tiến độ Chương trình<br><span style="white-space: nowrap;">Hoạch định Kế nhiệm 2026.</span></h2>
+                    <p>Theo dõi tổng thể các mốc thời gian cốt lõi và tiến trình hoàn thành của dự án</p>
+                </div>
+                <div class="meta-badge">Cập nhật: 29/05/2026</div>
+            </div>
+
+            <div class="phase-container">
+                <div class="phase-title">
+                    <span>GIAI ĐOẠN 1 Tổng thể</span>
+                    <span style="color: var(--primary-light)">Tiến độ đạt: 36%</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Thành lập HĐNT</div>
+                        <div class="metric-value">85%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Chặng 1 (VTTY)</div>
+                        <div class="metric-value">48%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 48%"></div></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Chặng 2 & 3 (CĐKN + UV)</div>
+                        <div class="metric-value">11%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 11%"></div></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Chặng 4 (AC)</div>
+                        <div class="metric-value">13%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 13%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-container" style="border-top: 3px solid #7b8a81;">
+                <div class="phase-title">
+                    <span style="color: #7b8a81;">GIAI ĐOẠN 2 Tổng thể</span>
+                    <span style="color: #7b8a81;">Tiến độ đạt: 0%</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card" style="border-top-color: #7b8a81;">
+                        <div class="metric-label">Chặng 5 (IDP)</div>
+                        <div class="metric-value" style="color: #7b8a81;">0%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 0%"></div></div>
+                    </div>
+                    <div class="metric-card" style="border-top-color: #7b8a81;">
+                        <div class="metric-label">Chặng 6 (Đào tạo)</div>
+                        <div class="metric-value" style="color: #7b8a81;">0%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 0%"></div></div>
+                    </div>
+                    <div class="metric-card" style="border-top-color: #7b8a81;">
+                        <div class="metric-label">Chặng 7 (Bổ nhiệm)</div>
+                        <div class="metric-value" style="color: #7b8a81;">0%</div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header-custom">
+                    <span>CHI TIẾT TIẾN ĐỘ TRIỂN KHAI HOẠT ĐỘNG</span>
+                </div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Mục / Hoạt động</th>
+                            <th style="width: 180px;">Ngày triển khai</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 110px;">% Hoàn thành</th>
+                            <th>Cập nhật kết quả thực hiện (Cột F)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #edf3ed;"><td colspan="5" class="text-bold-highlight">▶ THÀNH LẬP HỘI ĐỒNG NHÂN TÀI (HĐNT)</td></tr>
+                        <tr>
+                            <td>Thành lập Hội đồng Nhân tài</td>
+                            <td>12–13/05/2026</td>
+                            <td><span class="badge badge-success">Hoàn thành</span></td>
+                            <td class="text-bold-highlight">100%</td>
+                            <td>Thống nhất cơ cấu, vai trò và trách nhiệm với HĐNT</td>
+                        </tr>
+                        <tr>
+                            <td>Ban hành QĐ & Quy chế HĐNT</td>
+                            <td>30/05/2026</td>
+                            <td><span class="badge badge-warning">Đang triển khai</span></td>
+                            <td class="text-bold-highlight">70%</td>
+                            <td>Đã hoàn tất dự thảo Quy chế hoạt động của HĐNT, đang lên tờ trình</td>
+                        </tr>
+                        
+                        <tr style="background-color: #edf3ed;"><td colspan="5" class="text-bold-highlight">▶ CHẶNG 1 – XÁC ĐỊNH VỊ TRÍ TRỌNG YẾU (VTTY)</td></tr>
+                        <tr>
+                            <td>Hướng dẫn Trưởng đơn vị xác định VTTY</td>
+                            <td>16/05/2026</td>
+                            <td><span class="badge badge-success">Hoàn thành</span></td>
+                            <td class="text-bold-highlight">100%</td>
+                            <td>Tổ chức buổi tập huấn hướng dẫn trực tiếp</td>
+                        </tr>
+                        <tr>
+                            <td>Tổng hợp Danh sách đề xuất VTTY từ đơn vị</td>
+                            <td>23/05/2026 - 30/5/2026</td>
+                            <td><span class="badge badge-warning">Đang triển khai</span></td>
+                            <td class="text-bold-highlight">90%</td>
+                            <td>Đang tổng hợp danh sách đề xuất từ đơn vị.</td>
+                        </tr>
+                        <tr>
+                            <td>Trình BOD phê duyệt danh sách VTTY từ đơn vị</td>
+                            <td>30/5/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Ban hành danh sách VTTY Tập đoàn</td>
+                            <td>2026-06-06</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="background-color: #edf3ed;"><td colspan="5" class="text-bold-highlight">▶ CHẶNG 2 – XÂY DỰNG KHUNG NĂNG LỰC & CHÂN DUNG KẾ NHIỆM</td></tr>
+                        <tr>
+                            <td>HĐNT xây dựng Khung Chân dung Kế nhiệm Tập đoàn</td>
+                            <td>20/05/2026 - 30/05/2026</td>
+                            <td><span class="badge badge-warning">Đang triển khai</span></td>
+                            <td class="text-bold-highlight">80%</td>
+                            <td>1. Đã thống nhất được format.<br>2. Đã thống nhất 8 nhóm năng lực, HR đang viết định nghĩa. <br>Bước tiếp theo: HĐNT phê duyệt lại các định nghĩa chi tiết</td>
+                        </tr>
+                        <tr>
+                            <td>Trình BOD phê duyệt Khung Chân dung kế nhiệm Tập đoàn</td>
+                            <td>2026-06-06</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Ban hành Khung chân dung kế nhiệm Tập đoàn</td>
+                            <td>2026-08-06</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HODs xây dựng Chân dung Kế nhiệm từng VTTY<br><span style="font-size:12px; font-weight:normal; color:#5d675f;">(Dựa vào Khung Chân dung Kế nhiệm Tập đoàn, các Trưởng đơn vị thiết lập hành vi cho từng cấp độ trọng yếu chi tiết)</span></td>
+                            <td>10/6/2026 - 17/6/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HĐNT thẩm định Chân dung Kế nhiệm từng VTTY</td>
+                            <td>20/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Trình BOD phê duyệt Chân dung kế nhiệm từng VTTY</td>
+                            <td>22/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Ban hành Chân dung Kế nhiệm từng VTTY</td>
+                            <td>24/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="background-color: #edf3ed;"><td colspan="5" class="text-bold-highlight">▶ CHẶNG 3: CHỌN ỨNG VIÊN PHÙ HỢP</td></tr>
+                        <tr>
+                            <td>HODs đánh giá Sơ loại Ứng viên đề cử cấp đơn vị</td>
+                            <td>10/6/2026 - 17/6/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tổng hợp đánh giá Sơ loại Ứng viên đề cử cấp đơn vị</td>
+                            <td>18/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HĐNT đánh giá danh sách Ứng viên sơ bộ được đề cử</td>
+                            <td>20/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>BOD phê duyệt và ban hành Danh sách Ứng viên tiềm năng</td>
+                            <td>24/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="background-color: #edf3ed;"><td colspan="5" class="text-bold-highlight">▶ CHẶNG 4 – ĐÁNH GIÁ ỨNG VIÊN (ASSESSMENT CENTER)</td></tr>
+                        <tr>
+                            <td>Thiết kế Trung tâm đánh giá (Assessment Center)</td>
+                            <td>31/05/2026</td>
+                            <td><span class="badge badge-warning">Đang triển khai</span></td>
+                            <td class="text-bold-highlight">50%</td>
+                            <td>Đã hoàn thiện đánh giá Hogan & Harrison; đang xây dựng bài tập mô phỏng (Simulation Exercises), phỏng vấn hành vi (BEI) và khung đánh giá nguyện vọng nghề nghiệp</td>
+                        </tr>
+                        <tr>
+                            <td>HĐNT xây dựng Ngân hàng đề thi của trung tâm đánh giá</td>
+                            <td>2026-06-06</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Trình BOD phê duyệt Ngân hàng đề thi</td>
+                            <td>20/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tổ chức đánh giá ứng viên (Assessment Center)</td>
+                            <td>26–30/06/2026</td>
+                            <td><span class="badge badge-info">Chưa triển khai</span></td>
+                            <td class="text-bold-highlight">0%</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 2: DANH SÁCH VTTY ================= -->
+        <div id="vtty" class="tab-content">
+            <div class="header-dashboard">
+                <div class="header-title">
+                    <h2>Xác định Vị trí Trọng yếu Toàn Tập đoàn</h2>
+                    <p>Báo cáo ma trận thống kê cơ cấu và danh sách chi tiết các vị trí quan trọng</p>
+                </div>
+            </div>
+
+            <div class="vtty-summary-wrapper">
+                <div>
+                    <div class="section-title-highlight">BẢNG TỔNG HỢP SỐ LƯỢNG VỊ TRÍ TRỌNG YẾU THEO ĐƠN VỊ</div>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:70px;">Stt</th>
+                                    <th>Đơn vị / Division</th>
+                                    <th style="text-align:center;">Cấp 1 (P1)</th>
+                                    <th style="text-align:center;">Cấp 2 (P2)</th>
+                                    <th style="text-align:center;">Cấp 3 (P3)</th>
+                                    <th style="text-align:center; background-color:#edf3ed; color:var(--primary-color);">Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td class="text-bold-highlight">Khối xây dựng</td><td style="text-align:center;">0</td><td style="text-align:center;">5</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">5</td></tr>
+                                <tr><td>2</td><td class="text-bold-highlight">Khối TMBĐS</td><td style="text-align:center;">2</td><td style="text-align:center;">4</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">6</td></tr>
+                                <tr><td>3</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td style="text-align:center;">0</td><td style="text-align:center;">2</td><td style="text-align:center;">3</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">5</td></tr>
+                                <tr><td>4</td><td class="text-bold-highlight">Ngành Năng lượng</td><td style="text-align:center;">4</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">5</td></tr>
+                                <tr><td>5</td><td class="text-bold-highlight">Công ty Quản lý Bất động sản BIM</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">2</td></tr>
+                                <tr><td>6</td><td class="text-bold-highlight">Elite Fitness</td><td style="text-align:center;">1</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">2</td></tr>
+                                <tr><td>7</td><td class="text-bold-highlight">Ban pháp chế</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">1</td></tr>
+                                <tr><td>8</td><td class="text-bold-highlight">Ban Đầu tư</td><td style="text-align:center;">0</td><td style="text-align:center;">3</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">3</td></tr>
+                                <tr><td>9</td><td class="text-bold-highlight">Ban Marcom</td><td style="text-align:center;">2</td><td style="text-align:center;">4</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">6</td></tr>
+                                <tr><td>10</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td style="text-align:center;">0</td><td style="text-align:center;">4</td><td style="text-align:center;">1</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">5</td></tr>
+                                <tr><td>11</td><td class="text-bold-highlight">Ban Kiểm soát nội bộ</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">1</td></tr>
+                                <tr><td>12</td><td class="text-bold-highlight">Ban PTDA</td><td style="text-align:center;">0</td><td style="text-align:center;">2</td><td style="text-align:center;">0</td><td style="text-align:center; font-weight:700; background-color:#f7faf7;">2</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title-highlight">CHI TIẾT DANH SÁCH 48 VỊ TRÍ TRỌNG YẾU ĐỂ CỬ</div>
+            <div class="table-container">
+                <div style="overflow-x: auto;">
+                    <table class="custom-table" style="min-width: 1200px;">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">Stt</th>
+                                <th style="width:90px;">Khu vực</th>
+                                <th style="width:160px;">Đơn vị / Division</th>
+                                <th>Vị trí / Critical Position</th>
+                                <th style="width:150px;">Nhân sự đương nhiệm</th>
+                                <th style="width:80px;">Năm sinh</th>
+                                <th style="width:110px;">Thâm niên tại BIM</th>
+                                <th style="text-align:center; width:90px;">Điểm Q.Trọng</th>
+                                <th style="text-align:center; width:90px;">Điểm Rủi Ro</th>
+                                <th style="width:150px;">Mức độ trọng yếu</th>
+                                <th style="width:80px;">Band</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>Hà Nội</td><td class="text-bold-highlight">Ban pháp chế</td><td>Trưởng phòng Pháp lý</td><td>Đinh Thị Kim Ngân</td><td>-</td><td>16 năm</td><td style="text-align:center; font-weight:700;">8</td><td style="text-align:center; font-weight:700;">4</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 7</td></tr>
+                            <tr><td>2</td><td>Hà Nội</td><td class="text-bold-highlight">Elite Fitness</td><td>Giám đốc điều hành</td><td>-</td><td>-</td><td>-</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">7</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8/9</td></tr>
+                            <tr><td>3</td><td>Hà Nội</td><td class="text-bold-highlight">Elite Fitness</td><td>Phó Giám đốc Vận hành</td><td>Nguyễn Văn Quý</td><td>1975</td><td>9 tháng</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 7</td></tr>
+                            <tr><td>4</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Đầu tư</td><td>Trưởng phòng Đầu tư</td><td>Lê Bình Sơn</td><td>1990</td><td>Dưới 1 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>5</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Đầu tư</td><td>Trưởng phòng nghiên cứu chiến lược</td><td>-</td><td>-</td><td>-</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">7</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>6</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Đầu tư</td><td>Trưởng phòng M&A</td><td>-</td><td>-</td><td>-</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">7</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>7</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td>Trưởng Ban Kế Toán</td><td>Nguyễn Hải Hà</td><td>1980</td><td>6 năm</td><td style="text-align:center; font-weight:700;">12</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>8</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td>Trưởng phòng nguồn vốn trong nước</td><td>-</td><td>-</td><td>-</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">7</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>9</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td>Trưởng phòng nguồn vốn quốc tế</td><td>Phạm Quỳnh Thư</td><td>1984</td><td>7 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>10</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td>Trưởng phòng Kế hoạch Ngân sách và Phân tích Tài chính</td><td>Vũ Thị Anh Thư</td><td>1988</td><td>3 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>11</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Tài chính - Kế toán</td><td>Trưởng phòng KT tổng hợp kiêm trợ lý Trưởng ban</td><td>Lê Thị Kiều Trang</td><td>1983</td><td>11 năm</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 6</td></tr>
+                            <tr><td>12</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Kiểm soát nội bộ</td><td>Trưởng Ban Kiểm soát nội bộ</td><td>Phạm Văn Thành</td><td>1977</td><td>11 tháng</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>13</td><td>Hà Nội</td><td class="text-bold-highlight">Ban PTDA</td><td>Phó ban kiêm trưởng phòng thiết kế</td><td>Nguyễn Minh Huệ</td><td>1978</td><td>9 năm 6 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>14</td><td>Hà Nội</td><td class="text-bold-highlight">Ban PTDA</td><td>Trưởng phòng QL thiết kế cơ điện</td><td>Lê Khắc Hiệp</td><td>1981</td><td>6 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>15</td><td>Hà Nội</td><td class="text-bold-highlight">Khối xây dựng</td><td>Giám đốc Dự án cao cấp/ Giám đốc ban QLDA</td><td>Đồng Sỹ Hùng</td><td>1976</td><td>7 năm 4 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>16</td><td>Hà Nội</td><td class="text-bold-highlight">Khối xây dựng</td><td>Trưởng phòng Đấu thầu thương mại</td><td>Trần Thu Hằng</td><td>1985</td><td>7 năm 9 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>17</td><td>Hà Nội</td><td class="text-bold-highlight">Khối xây dựng</td><td>Trưởng phòng Quản lý Hợp đồng và Chi phí</td><td>Nguyễn Thu Trang</td><td>1986</td><td>1 năm 2 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>18</td><td>Quảng Ninh</td><td class="text-bold-highlight">Khối xây dựng</td><td>Giám đốc Ban QLDA Hạ Long</td><td>Phạm Hồng Hải</td><td>1978</td><td>15 năm 6 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>19</td><td>Phú Quốc</td><td class="text-bold-highlight">Khối xây dựng</td><td>Giám đốc Ban QLDA Phú Quốc</td><td>Mã Văn Sĩ</td><td>1977</td><td>8 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>20</td><td>Hà Nội</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Giám đốc sàn và Quản lý Đại lý (Khối Thống nhất)</td><td>Đỗ Thị Hòa</td><td>1982</td><td>5 năm 10 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>21</td><td>Hà Nội</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Trưởng phòng CSKH & Dịch vụ sau bán hàng</td><td>Dương Thị Thúy Hà</td><td>1980</td><td>11 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>22</td><td>Hà Nội</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Trưởng phòng Quản lý thiết kế và Quy hoạch (Phát triển SP)</td><td>Nguyễn Duy Kiên</td><td>1985</td><td>1 năm 2 tháng</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>23</td><td>Hà Nội</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Trưởng phòng Nghiên cứu & Phát triển thị trường</td><td>-</td><td>-</td><td>-</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">7</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>24</td><td>Quảng Ninh</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Phó Giám đốc Thường trực Ban QLLH & KD (BĐS Hạ Long)</td><td>Nguyễn Thế Linh</td><td>1983</td><td>7 năm 5 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>25</td><td>Phú Quốc</td><td class="text-bold-highlight">Khối TMBĐS</td><td>Phó Giám đốc Ban QLLH & KD (BĐS Phú Quốc)</td><td>Nguyễn Xuân Tân</td><td>1979</td><td>8 năm 2 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>26</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng ban Marcom Tập đoàn</td><td>Nguyễn Thúy Hạnh</td><td>1981</td><td>6 năm 1 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>27</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng phòng Marketing - Khối TMBĐS</td><td>Trần Đăng Quang</td><td>1987</td><td>3 năm 3 tháng</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>28</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng phòng Marketing - Khối Khách sạn & Nghỉ dưỡng</td><td>Nguyễn Thị Thanh Hà</td><td>1989</td><td>3 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>29</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng phòng Thương hiệu & Truyền thông tập đoàn</td><td>Đào Ngọc Anh</td><td>1987</td><td>1 năm 11 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>30</td><td>Quảng Ninh</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng phòng Marcom Hạ Long</td><td>Nguyễn Thu Phương</td><td>1983</td><td>7 năm 5 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>31</td><td>Phú Quốc</td><td class="text-bold-highlight">Ban Marcom</td><td>Trưởng phòng Marcom Phú Quốc</td><td>Lê Minh Hoàng</td><td>1985</td><td>5 năm 1 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 7</td></tr>
+                            <tr><td>32</td><td>Vĩnh Phúc</td><td class="text-bold-highlight">Ngành Năng lượng</td><td>Phó Tổng giám đốc Vận hành NM Điện mặt trời</td><td>Phạm Minh Tuấn</td><td>1979</td><td>6 năm</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>33</td><td>Ninh Thuận</td><td class="text-bold-highlight">Ngành Năng lượng</td><td>Phó Tổng giám đốc Vận hành NM Điện gió</td><td>Trần Văn Hùng</td><td>1981</td><td>4 năm</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>34</td><td>Ninh Thuận</td><td class="text-bold-highlight">Ngành Năng lượng</td><td>Giám đốc Kỹ thuật & Công nghệ cao cấp</td><td>Nguyễn Hoàng Long</td><td>1975</td><td>5 năm 6 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>35</td><td>Hà Nội</td><td class="text-bold-highlight">Ngành Năng lượng</td><td>Trưởng phòng Phát triển Dự án Năng lượng mới</td><td>Đỗ Huy Hoàng</td><td>1986</td><td>2 năm 3 tháng</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 7</td></tr>
+                            <tr><td>36</td><td>Ninh Thuận</td><td class="text-bold-highlight">Ngành Năng lượng</td><td>Trưởng phòng An toàn - Môi trường & Sức khỏe (HSE)</td><td>Vũ Văn Thắng</td><td>1983</td><td>5 năm</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 6</td></tr>
+                            <tr><td>37</td><td>Hà Nội</td><td class="text-bold-highlight">Công ty Quản lý Bất động sản BIM</td><td>Phó Giám đốc Thường trực Công ty QLBĐS BIM</td><td>Hoàng Vĩnh Long</td><td>1980</td><td>8 năm 3 tháng</td><td style="text-align:center; font-weight:700;">13</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>38</td><td>Quảng Ninh</td><td class="text-bold-highlight">Công ty Quản lý Bất động sản BIM</td><td>Trưởng phòng Vận hành kỹ thuật tòa nhà khối BĐS Hạ Long</td><td>Trần Tiến Dũng</td><td>1982</td><td>4 năm 2 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>39</td><td>Hà Nội</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td>Giám đốc Vận hành Sân Golf và Dịch vụ cao cấp</td><td>Phạm Thanh Sơn</td><td>1978</td><td>5 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 8</td></tr>
+                            <tr><td>40</td><td>Hà Nội</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td>Trưởng phòng Kinh doanh & Phát triển hội viên khối dịch vụ</td><td>Lê Thị Thu Hương</td><td>1984</td><td>3 năm 6 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>41</td><td>Quảng Ninh</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td>Trưởng phòng kỹ thuật khối Khách sạn/Resort Hạ Long</td><td>Vũ Ngọc Anh</td><td>1981</td><td>6 năm 2 tháng</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 7</td></tr>
+                            <tr><td>42</td><td>Phú Quốc</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td>Trưởng phòng kỹ thuật tổng hợp khối Resort Phú Quốc</td><td>Nguyễn Văn Hưởng</td><td>1983</td><td>4 năm 8 tháng</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 7</td></tr>
+                            <tr><td>43</td><td>Phú Quốc</td><td class="text-bold-highlight">Khối Khách sạn & TMDV</td><td>Trưởng phòng An ninh - An toàn tổ hợp Nghỉ dưỡng</td><td>Trần Hùng Cường</td><td>1979</td><td>7 năm 1 tháng</td><td style="text-align:center; font-weight:700;">9</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-3">Cấp 3/ Priority 3</span></td><td>Band 6</td></tr>
+                            <tr><td>44</td><td>Hà Nội</td><td class="text-bold-highlight">Khối Tương lai</td><td>Giám đốc Công nghệ thông tin (CIO)</td><td>Nguyễn Quang Trung</td><td>1982</td><td>1 năm 6 tháng</td><td style="text-align:center; font-weight:700;">12</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 8</td></tr>
+                            <tr><td>45</td><td>Hà Nội</td><td class="text-bold-highlight">Khối Tương lai</td><td>Trưởng phòng giải pháp phần mềm doanh nghiệp</td><td>Phạm Minh Hoàng</td><td>1988</td><td>3 năm</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>46</td><td>Hà Nội</td><td class="text-bold-highlight">Khối Tương lai</td><td>Trưởng phòng hạ tầng và an ninh mạng</td><td>Đỗ Tiến Đạt</td><td>1985</td><td>4 năm 2 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                            <tr><td>47</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Nhân Sự</td><td>Trưởng phòng Thu hút nhân tài tập đoàn</td><td>Nguyễn Thị Minh Thảo</td><td>1984</td><td>2 năm 5 tháng</td><td style="text-align:center; font-weight:700;">11</td><td style="text-align:center; font-weight:700;">6</td><td><span class="priority-1">Cấp 1/ Priority 1</span></td><td>Band 7</td></tr>
+                            <tr><td>48</td><td>Hà Nội</td><td class="text-bold-highlight">Ban Nhân Sự</td><td>Trưởng phòng Đối tác nhân sự (HRBP) khối BĐS</td><td>Lê Quỳnh Chi</td><td>1989</td><td>3 năm 1 tháng</td><td style="text-align:center; font-weight:700;">10</td><td style="text-align:center; font-weight:700;">5</td><td><span class="priority-2">Cấp 2/ Priority 2</span></td><td>Band 7</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 3: KHUNG CHÂN DUNG KẾ NHIỆM ================= -->
+        <div id="khungchandung" class="tab-content">
+            <div class="header-dashboard">
+                <div class="header-title">
+                    <h2>HỌP HỘI ĐỒNG NHÂN TÀI (PHIÊN 2) _ 23/05/2026</h2>
+                    <p>V/v: Xây dựng Khung chân dung kế nhiệm tập đoàn</p>
+                </div>
+                <div class="meta-badge">CONFIDENTIAL</div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header-custom" style="background-color: var(--primary-light);">
+                    <span>BẢNG CHI TIẾT TỔNG HỢP THẢO LUẬN CỦA HĐNT</span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="custom-table">
+                        <thead>
+                            <tr style="background-color: #f4f8f4;">
+                                <th style="width: 70px;">Stt</th>
+                                <th style="width: 280px;">Các vấn đề / nội dung thảo luận chi tiết (Hoặc Nhóm năng lực đề xuất)</th>
+                                <th style="width: 320px;">Ý kiến HĐNT (Hoặc Năng lực chi tiết đề xuất)</th>
+                                <th>HR định nghĩa hành vi thực tế</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Khối A -->
+                            <br>
+                            <tr style="background-color: rgba(15, 122, 61, 0.06);">
+                                <td class="text-bold-highlight">A</td>
+                                <td class="text-bold-highlight">Các nhóm yếu tố của Khung chân dung kế nhiệm</td>
+                                <td colspan="2">a. Nên điều chỉnh lại tỷ trọng của các nhóm yếu tố trên. Đánh giá tỷ trọng cao nhất đối với nhóm "Năng lực lãnh đạo"<br>- Hiệu suất: 20%<br>- Gắn kết: 20%<br>- Tiềm năng: 20%<br>- Năng lực lãnh đạo: 40%<br><br>b.Nhóm yếu tố "Hiệu suất": Không nên đưa chỉ số đánh giá KPI cụ thể, điều chỉnh lại thành cấp độ hành vi (1->4) thống nhất với các nhóm yếu tố khác.</td>
+                            </tr>
+
+                            <!-- Khối B tổng quan -->
+                            <tr style="background-color: #edf3ed;">
+                                <td class="text-bold-highlight">B</td>
+                                <td class="text-bold-highlight">Các năng lực của người lãnh đạo/quản lý BIMGroup</td>
+                                <td colspan="2" class="text-bold-highlight" style="color: var(--primary-color);">HĐNT thảo luận và thống nhất đưa ra 8 nhóm năng lực lớn cần có. HR sẽ viết định nghĩa cho các năng lực và đưa và bộ công cụ đảm bảo tính thống nhất, khoa học khi đánh giá.</td>
+                            </tr>
+
+                            <!-- Bộ 8 năng lực chi tiết -->
+                            <!-- Mục 1 -->
+                            <tr>
+                                <td rowspan="11" style="background: #ffffff; font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">1</td>
+                                <td rowspan="11" class="text-bold-highlight" style="background: #ffffff; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Tính phù hợp văn hóa BIM Group - Cuture Fit</td>
+                                <td>1.1. Giản dị, Khiêm tốn, khiêm nhường</td>
+                                <td>Là cách ứng xử chân thành, gần gũi, không phô trương thành tích hay vị thế cá nhân &#10;Chủ động lắng nghe, tiếp thu góp ý và học hỏi từ đồng nghiệp, đối tác và thực tiễn công việc.</td>
+                            </tr>
+                            <tr><td>1.2. Nhân văn</td><td>Quan tâm đến con người trong quá trình ra quyết định và triển khai công việc, cân bằng giữa yêu cầu công việc và tác động đến nhân sự, khách hàng và cộng đồng.&#10;Là khả năng ứng xử với người khác bằng sự tôn trọng, thấu hiểu và thiện chí trong quá trình làm việc và hợp tác.</td></tr>
+                            <tr><td>1.3.Chính trực</td><td>Hành động minh bạch, trung thực và nhất quán giữa cam kết với thực tế triển khai. &#10;Báo cáo đúng sự việc, không che giấu sai sót và không đánh đổi nguyên tắc vì lợi ích ngắn hạn.</td></tr>
+                            <tr><td>1.4.Thực chất, làm thật, Hướng đến kết quả thực chất</td><td>Tập trung tạo ra kết quả có thể kiểm chứng bằng chất lượng, tiến độ và giá trị thực tế. &#10;Ưu tiên hành động, giải quyết vấn đề đến nơi đến chốn và hạn chế hình thức trong báo cáo hoặc vận hành.</td></tr>
+                            <tr><td>1.5. Kỷ luật</td><td>Là khả năng tuân thủ nguyên tắc, cam kết và tiêu chuẩn công việc ngay cả khi không có giám sát trực tiếp&#10;Thực hiện công việc đúng thời hạn, đúng quy trình và duy trì tính nhất quán trong hành động</td></tr>
+                            <tr><td>1.6. Chỉn chu</td><td>Chuẩn bị và thực hiện công việc cẩn thận, rõ ràng và có tiêu chuẩn và chú ý đến chất lượng cũng như chi tiết quan trọng.&#10;Kiểm tra kỹ thông tin, hồ sơ và đầu ra trước khi bàn giao để hạn chế sai sót và phát sinh lại.</td></tr>
+                            <tr><td>1.7.Quyết liệt đến cùng</td><td>Theo đuổi mục tiêu đến khi hoàn thành cam kết hoặc giải quyết dứt điểm vấn đề. &#10;Chủ động tháo gỡ khó khăn, bám sát tiến độ và không bỏ dở khi gặp trở ngại.</td></tr>
+                            <tr><td>1.8. Dám chịu trách nhiệm (Ownership)</td><td>Chủ động nhận trách nhiệm đối với kết quả công việc của mình và đội ngũ. &#10;Không đổ lỗi, không né tránh vấn đề và trực tiếp tham gia xử lý khi phát sinh sự cố.</td></tr>
+                            <tr><td>1.9. Chủ động</td><td>Tự tìm việc cần làm, nhận diện sớm rủi ro và đề xuất phương án xử lý trước khi được yêu cầu. &#10;Chủ động phối hợp nguồn lực và theo sát công việc để bảo đảm tiến độ.</td></tr>
+                            <tr><td>1.10. Chịu áp lực</td><td>Giữ được sự tập trung và ổn định trong điều kiện áp lực cao về tiến độ, khối lượng hoặc thay đổi. &#10;Duy trì chất lượng công việc và khả năng phối hợp ngay cả trong giai đoạn căng thẳng.</td></tr>
+                            <tr><td style="border-bottom: 1px solid var(--border-color);">1.11.Học hỏi, sáng tạo</td><td style="border-bottom: 1px solid var(--border-color);">Liên tục tìm kiếm cách làm mới để cải thiện chất lượng, năng suất hoặc trải nghiệm công việc. &#10;Dám thử nghiệm ý tưởng mới, điều chỉnh cách làm cũ và học từ kết quả triển khai thực tế</td></tr>
+
+                            <!-- Mục 2 -->
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);">
+                                <td rowspan="5" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">2</td>
+                                <td rowspan="5" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Tầm nhìn chiến lược</td>
+                                <td>2.1. Tầm nhìn dài hạn; Định hướng phát triển bền vững cho tổ chức; Chấp nhận hy sinh ngắn hạn cho dài hạn/ Tư duy dài hạn</td>
+                                <td>Hoạch định và triển khai công việc dựa trên tác động dài hạn đối với tổ chức thay vì chỉ giải quyết mục tiêu ngắn hạn. Chủ động xây dựng nền tảng về con người, hệ thống, năng lực và quan hệ đối tác để duy trì tăng trưởng ổn định và phát triển bền vững.</td>
+                            </tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td>2.2.Khả năng dự đoán ngắn/ trung/ dài hạn.</td><td>Khả năng phân tích dữ liệu, bối cảnh và tín hiệu thị trường để nhận diện sớm các cơ hội, rủi ro và xu hướng trong ngắn, trung và dài hạn. &#10;Chuẩn bị phương án hành động trước khi thay đổi xảy ra và điều chỉnh kế hoạch kịp thời theo diễn biến thực tế</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td>2.3.Hiểu và nhận định điều gì quan trọng trong tương lai.</td><td>Khả năng xác định rõ những vấn đề, nguồn lực và cơ hội có tác động lớn đến sự phát triển dài hạn của tổ chức. &#10;Hoạch định nguồn lực vào các mục tiêu trọng yếu thay vì dàn trải hoặc chạy theo vấn đề ngắn hạn.</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td>2.4. Thiết lập mục tiêu và ra quyết định.</td><td>Thiết lập mục tiêu rõ ràng, khả thi, có định hướng dài hạn và gắn với ưu tiên chiến lược của tổ chức&#10;Đưa ra quyết định dựa trên dữ liệu, mức độ tác động và khả năng triển khai thực tế; đồng thời chịu trách nhiệm với lựa chọn đã đưa ra.</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td style="border-bottom: 1px solid var(--border-color);">2.5. Dám chọn cuộc chơi/ Tiên phong dẫn dắt thị trường</td><td style="border-bottom: 1px solid var(--border-color);">Chủ động tìm kiếm cơ hội mới, dám lựa chọn hướng đi khác biệt và tạo lợi thế cạnh tranh cho tổ chức.&#10;Không né tránh thách thức lớn; sẵn sàng thử nghiệm, đầu tư và theo đuổi các mục tiêu có tính dẫn dắt thị trường.</td></tr>
+
+                            <!-- Mục 3 -->
+                            <tr>
+                                <td rowspan="3" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">3</td>
+                                <td rowspan="3" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Năng lực học hỏi và đổi mới sáng tạo</td>
+                                <td>3.1. Học hỏi</td>
+                                <td>Chủ động cập nhật kiến thức, công nghệ và kinh nghiệm mới để nâng cao năng lực cá nhân và chất lượng công việc. &#10;Tự nhìn lại kết quả thực hiện, rút kinh nghiệm và chuyển hóa bài học thành hành động cụ thể</td>
+                            </tr>
+                            <tr><td>3.2. Thích ứng</td><td>Điều chỉnh cách làm, tư duy và ưu tiên công việc phù hợp với thay đổi của thị trường, tổ chức hoặc yêu cầu thực tế. &#10;Giữ khả năng hành động ổn định trong môi trường có biến động, áp lực hoặc thay đổi nhanh.</td></tr>
+                            <tr><td style="border-bottom: 1px solid var(--border-color);">3.3. Đổi mới sáng tạo</td><td style="border-bottom: 1px solid var(--border-color);">Chủ động đề xuất và thử nghiệm cách làm mới nhằm cải thiện năng suất, chất lượng hoặc trải nghiệm công việc. &#10;Khuyến khích tư duy khác biệt, dám thay đổi các cách làm không còn phù hợp và theo sát hiệu quả sau triển khai.</td></tr>
+
+                            <!-- Mục 4 -->
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);">
+                                <td rowspan="3" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">4</td>
+                                <td rowspan="3" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Tư duy hệ thống</td>
+                                <td rowspan="3" style="vertical-align: middle; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Nhìn tổng thể bức tranh, chứ không nhìn cục bộ vấn đề</td>
+                                <td><strong>Tên năng lực: Tư duy tổng thể</strong>&#10;Định nghĩa: Nhìn nhận vấn đề trong mối liên hệ với mục tiêu chung, chuỗi vận hành và tác động liên phòng ban. Xác định nguyên nhân cốt lõi thay vì chỉ xử lý biểu hiện bề mặt để đưa ra hướng xử lý phù hợp.</td>
+                            </tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td><strong>Tên năng lực: Điều phối hệ thống</strong>&#10;Định nghĩa: Chủ động kết nối các bộ phận, nguồn lực và thông tin để triển khai công việc đồng bộ. Nhận diện và xử lý kịp thời các điểm phụ thuộc hoặc điểm nghẽn ảnh hưởng đến tiến độ chung.</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td style="border-bottom: 1px solid var(--border-color);"><strong>Tên năng lực: Quản trị tác động hệ thống</strong>&#10;Định nghĩa: Dự báo các tác động dây chuyền và nguy cơ phát sinh trong quá trình vận hành hoặc triển khai công việc. Chuẩn bị phương án kiểm soát và ứng phó nhằm giảm ảnh hưởng đến toàn hệ thống.</td></tr>
+
+                            <!-- Mục 5 -->
+                            <tr>
+                                <td rowspan="2" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">5</td>
+                                <td rowspan="2" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Khả năng thực thi/ triển khai</td>
+                                <td>5.1. Khả năng phân tích và nhận định vấn đề</td>
+                                <td>Thu thập và phân tích thông tin từ nhiều nguồn để xác định đúng bản chất, nguyên nhân và mức độ ảnh hưởng của vấn đề. &#10;Đưa ra nhận định rõ ràng, có cơ sở và tập trung vào hướng xử lý khả thi trong thực tế.</td>
+                            </tr>
+                            <tr><td style="border-bottom: 1px solid var(--border-color);">5.2. Khả năng ra quyết định & phản biện</td><td style="border-bottom: 1px solid var(--border-color);">Đưa ra quyết định kịp thời dựa trên dữ liệu, mức độ ưu tiên và tác động đến mục tiêu chung. &#10;Chủ động đặt câu hỏi, phản biện đa chiều và kiểm tra giả định trước khi thống nhất phương án triển khai.</td></tr>
+
+                            <!-- Mục 6 -->
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);">
+                                <td rowspan="4" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">6</td>
+                                <td rowspan="4" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Xây dựng và dẫn dắt đội ngũ</td>
+                                <td>6.1. Tạo ảnh hưởng</td>
+                                <td>Tác động đến người khác thông qua uy tín cá nhân, lập luận rõ ràng và hành động nhất quán thay vì dựa vào chức danh hay quyền lực. &#10;Chủ động kết nối, thuyết phục và tạo sự đồng thuận để thúc đẩy mục tiêu chung.</td>
+                            </tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td>6.2. Dẫn dắt</td><td>Định hướng rõ mục tiêu, phân vai cụ thể và theo sát quá trình thực hiện để đội ngũ hoàn thành cam kết&#10;Chủ động tháo gỡ khó khăn, giữ nhịp vận hành và thúc đẩy tinh thần trách nhiệm trong tập thể.</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td>6.3. Truyền cảm hứng</td><td>Khơi dậy động lực làm việc bằng cách truyền đạt rõ ý nghĩa công việc, mục tiêu và giá trị mà đội ngũ cùng hướng đến. &#10;Lan tỏa tinh thần hành động, cam kết và khát vọng phát triển thông qua thái độ và hành vi thực tế hằng ngày.</td></tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);"><td style="border-bottom: 1px solid var(--border-color);">6.4. Trao quyền</td><td style="border-bottom: 1px solid var(--border-color);">Giao việc gắn với quyền hạn và kỳ vọng rõ ràng để nhân sự chủ động ra quyết định trong phạm vi trách nhiệm. &#10;Tin tưởng đội ngũ, tạo điều kiện thử sức và hỗ trợ kịp thời thay vì kiểm soát vi mô.</td></tr>
+
+                            <!-- Mục 7 -->
+                            <tr>
+                                <td rowspan="4" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">7</td>
+                                <td rowspan="4" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Phẩm chất đạo đức</td>
+                                <td>7.1. Đồng cảm/thấu cảm</td>
+                                <td>Chủ động đặt mình vào hoàn cảnh của người khác để hiểu cảm xúc, khó khăn và nhu cầu trong công việc. &#10;Hành xử trên tinh thần tôn trọng con người, hỗ trợ đúng lúc và cân nhắc tác động của quyết định đến nhân sự, đối tác và khách hàng.</td>
+                            </tr>
+                            <tr><td>7.2. Lắng nghe</td><td>Tập trung tiếp nhận ý kiến, phản hồi và quan điểm của người khác trước khi đưa ra kết luận hoặc quyết định. &#10;Chủ động trao đổi hai chiều, đặt câu hỏi làm rõ và phản hồi trên tinh thần xây dựng.</td></tr>
+                            <tr><td>7.3. Công bằng và minh bạch</td><td>Đánh giá, phân công và xử lý công việc dựa trên nguyên tắc, dữ liệu và tiêu chí rõ ràng thay vì cảm tính hay quan hệ cá nhân. &#10;Công khai thông tin cần thiết, giải thích rõ cơ sở ra quyết định và nhất quán trong cách áp dụng quy định.</td></tr>
+                            <tr><td style="border-bottom: 1px solid var(--border-color);">7.4. Đạo đức nghề nghiệp</td><td style="border-bottom: 1px solid var(--border-color);">Tuân thủ chuẩn mực nghề nghiệp và nguyên tắc ứng xử trong mọi hoạt động công việc.&#10;Không lợi dụng vị trí, thông tin hoặc quyền hạn vì lợi ích cá nhân; bảo vệ uy tín tổ chức và chất lượng chuyên môn trong quá trình thực hiện nhiệm vụ.</td></tr>
+
+                            <!-- Mục 8 -->
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);">
+                                <td rowspan="2" style="font-weight: bold; text-align: center; border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">8</td>
+                                <td rowspan="2" class="text-bold-highlight" style="border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">Xây dựng mối quan hệ</td>
+                                <td colspan="2"><strong>Tên năng lực: Xây dựng quan hệ hợp tác nội bộ</strong>&#10;Định nghĩa: Chủ động phối hợp, chia sẻ thông tin và duy trì kết nối với các đơn vị, phòng ban và đội ngũ trong tập đoàn để triển khai công việc chung. Ưu tiên mục tiêu tập thể, xử lý khác biệt trên tinh thần hợp tác và cùng chịu trách nhiệm về kết quả.</td>
+                            </tr>
+                            <tr style="background-color: rgba(15, 122, 61, 0.018);">
+                                <td colspan="2" style="border-bottom: 1px solid var(--border-color);"><strong>Tên năng lực: Xây dựng quan hệ đối tác bên ngoài</strong>&#10;Định nghĩa: Thiết lập và duy trì quan hệ làm việc tin cậy với khách hàng, đối tác, nhà thầu và các bên liên quan bên ngoài. Giao tiếp minh bạch, giữ cam kết và chủ động phối hợp để bảo đảm lợi ích lâu dài và hình ảnh của tập đoàn.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT CHUYỂN TAB SPA KHÔNG LOAD LẠI TRANG -->
+    <script>
+        function switchTab(tabId, buttonElement) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            buttonElement.classList.add('active');
+
+            document.querySelector('.main-content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
